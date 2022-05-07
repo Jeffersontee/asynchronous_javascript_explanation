@@ -57,9 +57,12 @@ function main() {
 */
 
 async function getFact() {
-	const url = 'https://api.aakhilv.me/fun/facts';
-	const result = await axios.get(url);
-	return result.data[0];
+
+		const url = "https://api.aakhilv.me/fun/facts";
+    const result = await axios.get(url);
+    return result.data[0];
+		//return console.log({ message: "Não houve retorno dos dados!!"})
+	
 }
 
 /*
@@ -96,17 +99,26 @@ async function main() {
 */
 
 async function main() {
-	console.time('getFactTimer');
-	const promises = [];
-	for (let i = 0; i < 5; i++) {
-		promises.push(getFact());
-	}
-	const results = await Promise.all(promises);
-	for (let i = 0; i < 5; i++) {
-		console.log(`result no.${i + 1}:`, results[i]);
-	}
-	console.timeEnd('getFactTimer');
-}
+	try {
+			console.time("getFactTimer");
+    	const promises = [];
+    	for (let i = 0; i < 5; i++) {
+				promises.push(getFact());
+    }
 
+		const results = await Promise.all(promises);
+			if (results != undefined) {
+				for (let i = 0; i < 5; i++) {
+          console.log(`result no.${i + 1}:`, results[i]);
+				}
+				console.timeEnd("getFactTimer");
+			//} else {
+				//throw new console.log(Error({ err: true, message: "Deu ruim!!" }));
+			}
+			
+	} catch (err) {
+		return console.log({ err: false, message: "Api esta fora do ar!!"});
+	}
+}
 
 main();
